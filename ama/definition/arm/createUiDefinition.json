@@ -1,0 +1,31 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/0.1.2-preview/CreateUIDefinition.MultiVm.json#",
+    "handler": "Microsoft.Azure.CreateUIDef",
+    "version": "0.1.2-preview",
+    "parameters": {
+        "basics": [
+            {
+                "name": "appName",
+                "type": "Microsoft.Common.TextBox",
+                "label": "Application Name",
+                "defaultValue": "myupdatableapp",
+                "toolTip": "Application name",
+                "constraints": {
+                    "required": true,
+                    "regex": "^[a-zA-Z0-9._-]{6,50}$",
+                    "validationMessage": "Alphanumeric characters, underscores and dashes are allowed, and the value must be 6-50 characters long."
+                },
+                "visible": true
+            }
+		 ],
+        "steps": [
+        ],
+        "outputs": {
+            "location": "[location()]",
+			"appName": "[basics('appName')]",
+            "applicationResourceName": "[basics('appName')]",
+			"managedAppResourceGroup": "[resourceGroup().name]"
+
+        }
+    }
+}

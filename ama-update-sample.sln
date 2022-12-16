@@ -1,0 +1,63 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ama", "ama", "{3F362C26-0012-48BE-AF23-74E2D37FA168}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "commands", "ama\commands\commands.csproj", "{0E13A40C-09DC-42A5-B0C3-3BB5C5A72031}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "publisher", "publisher", "{94A4086E-1790-48DF-8370-B5862F5E64C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "events", "publisher\events\events.csproj", "{9D627E42-8FE6-4ABE-A82F-3990E537D5D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "setcommandurl", "publisher\setcommandurl\setcommandurl.csproj", "{428AC785-EC4B-4551-9BDB-ECFFECEC6384}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "deployment", "publisher\deployment\deployment.csproj", "{8CA660D5-0570-4F59-B790-28F3351A7578}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "webhook", "publisher\webhook\webhook.csproj", "{35D34EDA-698D-4DF3-8EF3-12474E4909D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "utils", "utils\utils.csproj", "{F54E2300-CDE9-4340-9660-C285EC5ECE67}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0E13A40C-09DC-42A5-B0C3-3BB5C5A72031}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E13A40C-09DC-42A5-B0C3-3BB5C5A72031}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E13A40C-09DC-42A5-B0C3-3BB5C5A72031}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E13A40C-09DC-42A5-B0C3-3BB5C5A72031}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D627E42-8FE6-4ABE-A82F-3990E537D5D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D627E42-8FE6-4ABE-A82F-3990E537D5D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D627E42-8FE6-4ABE-A82F-3990E537D5D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D627E42-8FE6-4ABE-A82F-3990E537D5D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{428AC785-EC4B-4551-9BDB-ECFFECEC6384}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{428AC785-EC4B-4551-9BDB-ECFFECEC6384}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{428AC785-EC4B-4551-9BDB-ECFFECEC6384}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{428AC785-EC4B-4551-9BDB-ECFFECEC6384}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CA660D5-0570-4F59-B790-28F3351A7578}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CA660D5-0570-4F59-B790-28F3351A7578}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CA660D5-0570-4F59-B790-28F3351A7578}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CA660D5-0570-4F59-B790-28F3351A7578}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35D34EDA-698D-4DF3-8EF3-12474E4909D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35D34EDA-698D-4DF3-8EF3-12474E4909D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35D34EDA-698D-4DF3-8EF3-12474E4909D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35D34EDA-698D-4DF3-8EF3-12474E4909D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F54E2300-CDE9-4340-9660-C285EC5ECE67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F54E2300-CDE9-4340-9660-C285EC5ECE67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F54E2300-CDE9-4340-9660-C285EC5ECE67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F54E2300-CDE9-4340-9660-C285EC5ECE67}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0E13A40C-09DC-42A5-B0C3-3BB5C5A72031} = {3F362C26-0012-48BE-AF23-74E2D37FA168}
+		{9D627E42-8FE6-4ABE-A82F-3990E537D5D2} = {94A4086E-1790-48DF-8370-B5862F5E64C3}
+		{428AC785-EC4B-4551-9BDB-ECFFECEC6384} = {94A4086E-1790-48DF-8370-B5862F5E64C3}
+		{8CA660D5-0570-4F59-B790-28F3351A7578} = {94A4086E-1790-48DF-8370-B5862F5E64C3}
+		{35D34EDA-698D-4DF3-8EF3-12474E4909D2} = {94A4086E-1790-48DF-8370-B5862F5E64C3}
+	EndGlobalSection
+EndGlobal

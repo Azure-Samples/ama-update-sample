@@ -1,0 +1,7 @@
+bin
+obj
+.env
+mainTemplate.json
+appDefinition.zip
+local.settings.json
+.resourceGroupName

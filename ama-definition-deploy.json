@@ -1,0 +1,66 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "location": {
+        "type": "string",
+        "defaultValue": "[resourceGroup().location]"
+      },
+      "applicationName": {
+        "type": "string",
+        "metadata": {
+          "description": "Managed Application name"
+        }
+      },
+      "deploymentMode": {
+        "type": "string",
+        "defaultValue": "complete"
+      },
+      "notificationUrl": {
+        "type": "string",
+        "defaultValue": "none"
+      },
+      "_artifactsLocation": {
+        "type": "string",
+        "metadata": {
+          "description": "The base URI where artifacts required by this template are located."
+        }
+      }
+    },
+    "variables": {
+      "lockLevel": "None",
+      "description": "Managed Application definition",
+      "displayName": "Managed Application definition",
+      "managedApplicationDefinitionName": "[parameters('applicationName')]",
+      "packageFileUri": "[parameters('_artifactsLocation')]",
+      "managedResourceGroupId": "[concat(subscription().id,'/resourceGroups/', concat(parameters('applicationName'),'_managed'))]",
+      "applicationDefinitionResourceId": "[resourceId('Microsoft.Solutions/applicationDefinitions',variables('managedApplicationDefinitionName'))]",
+      "notificationPolicy": {
+        "notificationEndpoints": [
+          {
+            "uri": "[parameters('notificationUrl')]"
+          }
+        ]
+      }
+      
+    },
+    "resources": [
+      {
+        "type": "Microsoft.Solutions/applicationDefinitions",
+        "apiVersion": "2020-08-21-preview",
+        "name": "[variables('managedApplicationDefinitionName')]",
+        "location": "[parameters('location')]",
+        "properties": {
+          "lockLevel": "[variables('lockLevel')]",
+          "description": "[variables('description')]",
+          "displayName": "[variables('displayName')]",
+          "packageFileUri": "[variables('packageFileUri')]",
+          "deploymentPolicy": {
+            "deploymentMode": "[parameters('deploymentMode')]" 
+          },
+          "notificationPolicy": "[if(equals(parameters('notificationUrl'),'none'), json('null'), variables('notificationPolicy'))]"
+        }
+      }
+    ],
+    "outputs": {}
+  }
