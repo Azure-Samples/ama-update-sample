@@ -58,8 +58,6 @@ To update an Azure Managed Application instance, you can send a POST request to 
 
 When a new deployment is triggered in the Managed Resource Group, the `events` function will be triggered. This function will add a new entry in the Cosmos DB database with the `applicationId` and the `image` of the deployment.
 
-```bash
-
 ## Cleaning up the publisher's backend
 
 To delete all the deployed resources, you can run the following command:
