@@ -25,10 +25,10 @@ tmpDir=$(mktemp -d)
 cp -r ./ama/definition/bicep/* $tmpDir
 
 # replace variables (Linux, MacOS compatible)
-sed -I.bak "s/PUBLISHER_PREFIX/$PUBLISHER_PREFIX/g" $tmpDir/mainTemplate.bicep
-sed -I.bak "s/PUBLISHER_RESOURCE_GROUP/$PUBLISHER_RESOURCE_GROUP/g" $tmpDir/mainTemplate.bicep
-sed -I.bak "s/PUBLISHER_SUBSCRIPTION/$PUBLISHER_SUBSCRIPTION/g" $tmpDir/mainTemplate.bicep
-sed -I.bak "s/DOCKER_IMAGE_TAG/$DOCKER_IMAGE_TAG/g" $tmpDir/mainTemplate.bicep
+sed -i.bak "s/PUBLISHER_PREFIX/$PUBLISHER_PREFIX/g" $tmpDir/mainTemplate.bicep
+sed -i.bak "s/PUBLISHER_RESOURCE_GROUP/$PUBLISHER_RESOURCE_GROUP/g" $tmpDir/mainTemplate.bicep
+sed -i.bak "s/PUBLISHER_SUBSCRIPTION/$PUBLISHER_SUBSCRIPTION/g" $tmpDir/mainTemplate.bicep
+sed -i.bak "s/DOCKER_IMAGE_TAG/$DOCKER_IMAGE_TAG/g" $tmpDir/mainTemplate.bicep
 
 rm $tmpDir/*.bak
 

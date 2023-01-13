@@ -26,7 +26,7 @@ graph TD
     ID --> | Creates | MRG[Managed Resource Group]
     ID --> | Creates | BR[Baseline resources]
     BR --> | Comm. channel | Publisher
-    Publisher --> | App deployment | BR
+    Publisher --> | App deployment/update | BR
     BR --> | App resources | MRG
     MRG --> | Makes available | App
 ```
@@ -55,6 +55,8 @@ The solution is composed of the following components:
 - Docker
 - Appliance Resource Provider Object Id (it can be retrieve searching for "Appliance Resource Provider in the Azure Portal, in the Active Directory section)
 
+> If you are using WSL on Windows, make sure the _zip_ command is available. You can install it by issuing this command-line _sudo apt install zip_.
+ 
 ## Repository Structure
 
 ```bash
@@ -74,7 +76,7 @@ ama-update-sample
 └── utils                       # Utility classes used by all the functions
 ```
 
-## Deploying the publisher's backend an the Azure Managed Application definition
+## Deploying the publisher's backend and the Azure Managed Application definition
 
 To deploy the publisher's backend and the Azure Managed Application definition, you need to run the following commands in the root folder of the repository:
 
@@ -101,6 +103,8 @@ The last phase of the deployment will invoke the `setcommandurl` function, which
 To update an Azure Managed Application instance, you can send a POST request to the `deployment` function deployed in the publisher's backend. The body of the request should be a json with the `applicationId` of the Azure Managed Application instance to be updated, and the full name of the docker image to deploy in the `image` field. During the backend deployment phase, a sample image was deployed in the publisher's backend, so you can use that image for the update. The image is `<prefix>acr.azurecr.io/ama-update-sample-resources:<tag>` and can be found in the publisher's Container Registry.
 
 When a new deployment is triggered in the Managed Resource Group, the `events` function will be triggered. This function will add a new entry in the Cosmos DB database with the `applicationId` and the `image` of the deployment.
+
+> This step is invoked manually in this setup, but in an actual deployment system, it would be automatically called when the deployment is completed (and the command URL is sent to the Publisher).
 
 ## Cleaning up the publisher's backend
 
