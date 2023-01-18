@@ -56,7 +56,7 @@ The solution is composed of the following components:
 - Appliance Resource Provider Object Id (it can be retrieve searching for "Appliance Resource Provider in the Azure Portal, in the Active Directory section)
 
 > If you are using WSL on Windows, make sure the _zip_ command is available. You can install it by issuing this command-line _sudo apt install zip_.
- 
+
 ## Repository Structure
 
 ```bash
@@ -118,7 +118,7 @@ Here is an example of the JSON message for the POST request:
 
 When a new deployment is triggered in the Managed Resource Group, the `events` function will be triggered. This function will add a new entry in the Cosmos DB database with the `applicationId` and the `image` of the deployment.
 
-> This step is invoked manually in this setup, but in an actual deployment system, it would be automatically called when the deployment is completed (and the command URL is sent to the Publisher).
+> This step is invoked manually via a Postman tool in this tutorial, but in an actual deployment system, it would be automatically called from the Publisher's backend, called when a new version of the container image is available.
 
 ## Cleaning up the publisher's backend
 
