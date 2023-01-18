@@ -90,6 +90,9 @@ export APPLIANCE_RESOURCE_PROVIDER_OBJECT_ID=<object id>
 
 This will create a resource group with the name specified in the RESOURCE_GROUP_NAME environment variable, and deploy all the resources in that resource group. It will also create an Azure Managed Application definition called `ama-update-sample` in the service catalog.
 
+
+![AMA Flow Diagram](./flow.png)
+
 ## Deploying the Azure Managed Application
 
 Instances of the Azure Managed Application can be created using the `az` CLI or the Azure Portal.
