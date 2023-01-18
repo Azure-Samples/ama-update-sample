@@ -1,18 +1,16 @@
-using System.Net;
-using System.Text.Json.Nodes;
+using AMAUpdateSample.Utils;
+using Azure;
+using Azure.Identity;
+using Azure.ResourceManager;
+using Azure.ResourceManager.ContainerInstance;
+using Azure.ResourceManager.ContainerInstance.Models;
+using Azure.ResourceManager.Resources;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
-
-using Microsoft.Azure.Management.ContainerInstance.Fluent;
-using Microsoft.Azure.Management.ContainerInstance.Fluent.Models;
-using Microsoft.Azure.Management.Fluent;
-using Microsoft.Azure.Management.ResourceManager.Fluent;
-using Microsoft.Azure.Management.ResourceManager.Fluent.Authentication;
-using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-
-using AMAUpdateSample.Utils;
+using System.Net;
 using System.Text;
+using System.Text.Json.Nodes;
 
 namespace AMAUpdateSample.Publisher
 {
@@ -51,13 +49,8 @@ namespace AMAUpdateSample.Publisher
         private async Task<HttpResponseData> DeployAsync(HttpRequestData req, string image)
         {
             _logger.LogInformation($"Deploying image: {image}");
-
-            var credentials = SdkContext.AzureCredentialsFactory.FromSystemAssignedManagedServiceIdentity(MSIResourceType.AppService, AzureEnvironment.AzureGlobalCloud);
-
-            var azure = await Microsoft.Azure.Management.Fluent.Azure
-                .Configure()
-                .Authenticate(credentials)
-                .WithDefaultSubscriptionAsync();
+            var credentials = new ManagedIdentityCredential();
+            ArmClient client = new ArmClient(credentials);
 
             string applicationId = await GetConfig(Constants.Config.ApplicationId);
             string eventsUrl = await GetConfig(Constants.Config.EventsUrl);
@@ -67,33 +60,20 @@ namespace AMAUpdateSample.Publisher
             string rgName = await GetConfig(Constants.Config.ResourceGroupName);
             string containerInstanceName = Constants.AzureContainerInstanceName;
 
-            var rg = await azure.ResourceGroups.GetByNameAsync(rgName);
-
-            var existingContainerInstance = await azure.ContainerGroups.GetByResourceGroupAsync(rgName, containerInstanceName);
+            SubscriptionResource subscription = await client.GetDefaultSubscriptionAsync();
+            ResourceGroupCollection resourceGroups = subscription.GetResourceGroups();
+            ResourceGroupResource resourceGroup = await resourceGroups.GetAsync(rgName);
+            var containerGroups = resourceGroup.GetContainerGroups();
+            var existingContainerInstance = await containerGroups.GetAsync(containerInstanceName);
 
             // if the container instance didn't exist, fail
             if (existingContainerInstance == null) {
                 _logger.LogError($"Container instance {containerInstanceName} not found in resource group {rgName}");
                 return req.CreateResponse(HttpStatusCode.BadRequest);
             }
-
-            var containerGroup = azure.ContainerGroups.Define(containerInstanceName)
-                .WithRegion(rg.Region)
-                .WithExistingResourceGroup(rg)
-                .WithLinux()
-                .WithPrivateImageRegistry(registry, registryUsername, registryPassword)
-                .WithoutVolume()
-                .DefineContainerInstance(containerInstanceName)
-                .WithImage(image)
-                .WithoutPorts()
-                .WithEnvironmentVariables(new Dictionary<string, string> {
-                    { Constants.Config.ResourceGroupName, rgName },
-                })
-                .Attach()
-                .WithRestartPolicy(ContainerGroupRestartPolicy.Never)
-                .WithSystemAssignedManagedServiceIdentity()
-                .Create();
-
+            existingContainerInstance.Value.Data.Containers[0].Image = image;
+            existingContainerInstance.Value.Data.ImageRegistryCredentials.Add(new ContainerGroupImageRegistryCredential(registry) { Username = registryUsername, Password = registryPassword });
+            var result = await containerGroups.CreateOrUpdateAsync(WaitUntil.Completed, containerInstanceName, existingContainerInstance.Value.Data);
             using (var httpClient = new HttpClient())
             {
                 httpClient.Timeout = TimeSpan.FromMinutes(5);
