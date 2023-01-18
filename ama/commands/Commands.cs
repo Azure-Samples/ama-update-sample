@@ -71,9 +71,14 @@ namespace AMAUpdateSample.Publisher
                 _logger.LogError($"Container instance {containerInstanceName} not found in resource group {rgName}");
                 return req.CreateResponse(HttpStatusCode.BadRequest);
             }
+
+            // Update image in existing container instance object
             existingContainerInstance.Value.Data.Containers[0].Image = image;
+            // Update credentials (this is required)
             existingContainerInstance.Value.Data.ImageRegistryCredentials.Add(new ContainerGroupImageRegistryCredential(registry) { Username = registryUsername, Password = registryPassword });
+            // Update ACI with new image. Since everything else is the same, the existing ACI image is updated.  
             var result = await containerGroups.CreateOrUpdateAsync(WaitUntil.Completed, containerInstanceName, existingContainerInstance.Value.Data);
+            // POST result to events Function
             using (var httpClient = new HttpClient())
             {
                 httpClient.Timeout = TimeSpan.FromMinutes(5);
