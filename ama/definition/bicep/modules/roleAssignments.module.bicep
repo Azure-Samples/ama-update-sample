@@ -7,6 +7,11 @@ resource keyVault 'Microsoft.KeyVault/vaults@2022-07-01' existing = {
   name: keyVaultName
 }
 
+// ** Note that if you intent for these apps to be published to the Marketplace and have them deployed cross-tenant,
+// then you must add the following additional attribute to each of the roleAssignments resources properties. For example:
+//     delegatedManagedIdentityResourceId: commandsFunctionPrincipalId.Id
+
+
 // Function Identity - Key Vault Secrets User
 resource keyvaultFunctionAppPermissions 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   name: guid(resourceGroup().id, 'keyvaultFunctionAppPermissions')
