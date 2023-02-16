@@ -82,6 +82,7 @@ namespace AMAUpdateSample.Publisher
             existingContainerInstance.Value.Data.Containers[0].EnvironmentVariables.Add(rgNameEnvVar);
 
             // Update credentials (this is required)
+            existingContainerInstance.Value.Data.ImageRegistryCredentials.Clear();
             existingContainerInstance.Value.Data.ImageRegistryCredentials.Add(new ContainerGroupImageRegistryCredential(registry) { Username = registryUsername, Password = registryPassword });
             // Update ACI with new image. Since everything else is the same, the existing ACI image is updated.
             var result = await containerGroups.CreateOrUpdateAsync(WaitUntil.Started, containerInstanceName, existingContainerInstance.Value.Data);
