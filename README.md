@@ -109,7 +109,6 @@ Here is an example of the JSON message for the POST request:
 
 ```json
 {
-    "command" : "deploy",
     "applicationId":"subscriptionsaf4cbd2f-24f1-408a-9945-c7594b98c964resourcegroupspabloprovidersmicrosoft.solutionsapplicationsmyupdatableapp",
     "image": "abecaxkqnyv7qh6acr.azurecr.io/ama-update-sample-resources:1673630025"
 }
